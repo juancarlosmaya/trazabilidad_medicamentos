@@ -28,7 +28,7 @@ urlpatterns = [
     path('', inicio),
    ## path('inventario/', inventario),
     path(r'login/', login),
-    path(r'inventario/', inventario),
+    path(r'inventario/', include('inventario.urls')),
     path('admin/', include('django_sb_admin.urls')),
 
     # autenticación autentificación

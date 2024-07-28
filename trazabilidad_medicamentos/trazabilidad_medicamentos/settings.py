@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'inventario',
     'django.contrib.auth',   # para autenticación y autentificación
     'django.contrib.sites',  # para permisos 
     'django_registration',   # para registro 
@@ -147,7 +148,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
 LOGIN_REDIRECT_URL='/'
-LOGOUT_REDIRECT_URL='/cerrar_sesion'
+LOGOUT_REDIRECT_URL='/'
 
 
 SITE_ID = 1     #por error

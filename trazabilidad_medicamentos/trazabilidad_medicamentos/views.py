@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 def inicio(request):
-    return render(request,"base.html")
+    return render(request,"pagina_inicio.html")
 
 def inventario(request):
     return HttpResponse("hola")
