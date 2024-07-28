@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import os
 
 from pathlib import Path
 
@@ -31,17 +32,26 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.auth',   # para autenticación y autentificación
+    'django.contrib.sites',  # para permisos 
+    'django_registration',   # para registro 
+
+    'crispy_forms',          # para estilos de formularios
+    'corsheaders',           # para habilitar CORS
+    'rest_framework',        # para usar API
+    
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_sb_admin'        # plantilla boostrap
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',        #  CORS
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -54,7 +64,7 @@ ROOT_URLCONF = 'trazabilidad_medicamentos.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-CO'
 
 TIME_ZONE = 'UTC'
 
@@ -117,7 +127,76 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# por si se quiere manejar un directorio adicional para los archivos estáticos:
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR,'static'),
+)
+#print(STATICFILES_DIRS)
+
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+##### DE AUTENTICACIÓN Y AUTENTIFICACIÓN
+
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
+REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
+LOGIN_REDIRECT_URL='/'
+LOGOUT_REDIRECT_URL='/cerrar_sesion'
+
+
+SITE_ID = 1     #por error
+
+##### crispy forms
+
+CRISPY_TEMPLATE_PACK= 'bootstrap3'
+
+##### CORS
+
+#CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ALLOWED_ORIGINS = ['https://127.0.0.1','https://proyecto123.pythonanywhere.com' ,'ionic://localhost', 'http://localhost:8080']
+
+CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1','https://proyecto123.pythonanywhere.com','ionic://localhost', 'http://localhost:8080']
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_EXPOSE_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+#CORS_ALLOW_HEADERS = [
+#    'accept',
+#    'accept-encoding',
+#    'authorization',
+#    'content-type',
+#    'dnt',
+#    'origin',
+#    'user-agent',
+#    'x-csrftoken',
+#    'x-requested-with',
+#]
