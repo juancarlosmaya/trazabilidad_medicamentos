@@ -27,10 +27,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('', inicio),
    ## path('inventario/', inventario),
-    path(r'login/', login),
+   ## path(r'login/', login),
     path(r'inventario/', include('inventario.urls')),
-    path('admin/', include('django_sb_admin.urls')),
-
+   ## path('admin/', include('django_sb_admin.urls')),
+   path('admin/', admin.site.urls),
     # autenticación autentificación
     #url(r'^accounts/', include('registration.backends.default.urls'),name='inicio_sesion')
     url(r'^accounts/', include('django_registration.backends.one_step.urls')),

@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% load static%}
+
+        {% block content %}    
+            <h3 class="breadcrumb-item active">Nuevo Medicamento</h3>
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ mi_formulario.as_p }}
+                    <button type="submit" value="Submit" class="btn btn-success"> Guardar </button>
+                </form>
+            </div>
+        {% endblock content %}
+
