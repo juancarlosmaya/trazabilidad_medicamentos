@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea contacto</title>
+    <link rel="stylesheet" href="{% static 'css/crea_contacto_style.css' %}">
+</head>
+<body>
+    <div>
+        <ion-icon name="person-add-outline"></ion-icon>
+        <span>Crear contacto</span>
+        <ion-icon name="close-outline"></ion-icon>
+    </div>
+
+    <div>
+    <form action="" method="post">
+        {% csrf_token %}  
+        <select name="Tipo de contacto" id="">
+            <option value="Cliente"></option>
+            <option value="Proveedor"></option>
+            <option value="Ambos"></option>
+        </select>
+
+        <select name="Tipo de identidad" id="">
+            <option value="Número de identificación tributaria"></option>
+            <option value="Cédula de ciudadanía"></option>
+            <option value="Documento de identificación extranjero"></option>
+            <option value="Pasaporte"></option>
+            <option value="Cédula de extranjería"></option>
+            <option value="Tarjeta de extranjería"></option>
+            <option value="Tarjeta de identidad"></option>
+            <option value="Registro civil"></option>
+        </select>
+
+        <input type="number" placeholder="Identidad">
+        <input type="text" placeholder="Nombre">
+        <input type="text" placeholder="Dirección">
+        <input type="number" placeholder="Telefono">
+        
+        <select name="Departamento" id="">
+            <option value="Antioquia"></option>
+            <option value="Atlantico"></option>
+            <option value="Bogotá"></option>
+            <option value="Bolivar"></option>
+            <option value="Boyacá"></option>
+            <option value="Caldas"></option>
+            <option value="Caquetá"></option>
+            <option value="Cauca"></option>
+            <option value="Cesar"></option>
+            <option value="Cordoba"></option>
+            <option value="Cundinamarca"></option>
+            <option value="Chocó"></option>
+            <option value="Huila"></option>
+            <option value="La Guajira"></option>
+            <option value="Magdalena"></option>
+            <option value="Meta"></option>
+            <option value="Nariño"></option>
+            <option value="N. de Santander"></option>
+            <option value="Quindio"></option>
+            <option value="Risaralda"></option>
+            <option value="Santander"></option>
+            <option value="Sucre"></option>
+            <option value="Tolima"></option>
+            <option value="Valle del Cauca"></option>
+            <option value="Arauca"></option>
+            <option value="Casanare"></option>
+            <option value="Putumayo"></option>
+            <option value="San Andres"></option>
+            <option value="Amazonas"></option>
+            <option value="Guainía"></option>
+            <option value="Guaviare"></option>
+            <option value="Vaupes"></option>
+            <option value="Vichada"></option>
+        </select>
+
+        <input type="text" placeholder="Localidad">
+        <input type="text" placeholder="E-mail">
+
+        <button type="submit"> Crear </button>
+        <button type="reset"> Cancelar</button>        
+    </form>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>    
+</body>
+</html>

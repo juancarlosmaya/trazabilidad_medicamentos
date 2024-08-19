@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>login</title>
+  <link rel="stylesheet" href="{% static 'css/login_style.css' %}" type="text/css">
+
+</head>
+
+<body>
+  <div class="session">
+    <div>
+      <!-- <span>"{% static 'css/login_style.css' %}"</span> -->
+
+      <form action="" method="post">
+        {% csrf_token %}
+        <span id="msj_bienvenida">Bienvenido!</span>
+        <span id="txt_info">Inicie sesion en su cuenta</span>
+        <input name="username" type="text" placeholder="Usuario" autofocus="autofocus">
+        <input name="password" type="password" placeholder="Contraseña">
+        <output id=popup_msj name="message">{{ message }}</output>
+        <button name="submit" type="submit">Login</button>
+      </form>
+    </div>
+
+    <div class="rigth">     
+      <div class="info_name">
+        <span class="name_soft">Catalina</span>
+        <span class="msj_name">by Sertek</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'js/login_script.js' %}"></script>
+</body>
+
+</html>

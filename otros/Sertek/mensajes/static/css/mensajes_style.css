@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap');
+:root{
+    --color-barra-lateral:rgb(255, 255, 255);
+
+    --color-texto:rgb(0,0,0);
+    --color-texto-menu:rgb(134,136,144);
+
+    --color-boton:rgb(0,0,0);
+    --color-boton-texto:rgb(255,255,255);
+    --altura_barra_superior:60px;
+    --ancho_barra_lateral:245px;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Kameron", serif;
+    font-optical-sizing: auto;
+    font-weight: 530;
+    font-style: normal;
+    font-size: large;
+}
+body{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    /* overflow-y: scroll; */
+}
+.cabecera{
+    /* border: 1px solid red; */
+    border-bottom: 2px solid black;
+    /* position:sticky; */
+    /* top: 0px; */
+    /* left: 0px; */
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items:baseline;
+    /* overflow: hidden; */
+    padding-top: 6px;
+    /* opacity: 0.5; */
+    > ion-icon{
+        color: rgb(209, 14, 131);
+        font-size: xx-large;
+        margin-left: 20px;
+    }
+    > span{
+        font-size: x-large;
+        margin-left: 5px;
+    }
+    /* > span + span {
+        font-size: small;
+        margin-left: 10px;
+    } */
+}
+
+
+.container {
+    /* margin-top: 20px; */
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.message-box {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 80px;
+    /* height: fit-content; */
+    overflow-y: hidden;
+}
+.emoji-picker {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.emoji-picker button {
+    font-size: 20px;
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+

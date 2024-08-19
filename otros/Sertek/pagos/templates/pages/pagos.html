@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagos</title>
+    <link rel="stylesheet" href="{% static 'css/pagos_style.css' %}">
+</head>
+<body>
+        
+    <!-- Página principal -->
+
+    <div class="cabecera">
+        <ion-icon name="cash-outline"></ion-icon>
+        <span >Pagos</span>
+        <!-- <span>Servicio -> Procesos / Crear servicio</span>  -->                  
+    </div>
+    
+    <!-- Filtros -->
+    <div class="filtros">
+        <!-- Selección de rango de fecha  -->
+        <div style="display: flex;">
+            <div class="info_casilla" style="width: 20%;">
+                <div>
+                    <span>Fecha inicial</span> 
+                </div>
+                <div>
+                    <!-- <span>{{ fecha_de_creacion }}</span>  -->
+                    <input id="fecha_inicio"  type="date" >
+                </div>
+            </div>
+
+            <div class="info_casilla" style="width: 20%;" >
+                <div>
+                    <span>Fecha final</span> 
+                </div>
+                <div>
+                    <!-- <span>{{ fecha_de_creacion }}</span>  -->
+                    <input id="fecha_fin"  type="date" >
+                </div>
+            </div>
+        </div>
+
+        <!-- Selección de técnico  -->
+        <div style="display: flex;">
+            <div class="info_casilla" style="width: 20%;">
+                <div>
+                    <span>Técnico</span> 
+                </div>
+                <div>
+                    <!-- <span>{{ fecha_de_creacion }}</span>  -->
+                    <select id="lista_tecnicos">
+                        <!-- <option value="" disabled selected hidden>Tipo de identidad</option> -->
+                        <option value="">Todos</option>
+                        {% autoescape off %}
+                            {{ lista_tecnicos }}
+                        {% endautoescape %}  
+                    </select>
+                </div>
+            </div>
+            <div class="info_casilla" style="width: 20%;">
+                <div>
+                    <span>Estado</span> 
+                </div>
+                <div>
+                    <select id="estado" >         
+                        <option value="1" >Pagadas</option>
+                        <option value="0">Sin pagar</option>
+                        <option value="" selected>Todas</option>                                
+                    </select> 
+                </div>
+            </div>
+            <div class="info_casilla" style="width: 20%;">
+                <div>
+                    <span>Activas o eliminadas</span> 
+                </div>
+                <div>
+                    <select id="activa" >         
+                        <option value="1" >Activas</option>
+                        <option value="0">Eliminadas</option>
+                        <option value="" selected>Todas</option>                                
+                    </select> 
+                </div>
+            </div>
+
+            <div class="boton_filtro">
+                    <button onclick="BusquedaParam()">Aplicar filtros</button>
+            </div>
+        </div>
+
+    </div>
+        
+
+        <div class="cont_resultados">
+            <table id="tabla" class="tabla"  summary="no_orderDate">
+                <thead >
+                    <tr><th class="th1_servicios" >Servicio</th><th class="th2_servicios">Técnico</th><th class="th3_servicios">Acción/Estado</th> <th class="th4_servicios">Fecha</th> <th class="th5_servicios">Usuario</th> <th class="th6_servicios">Pago</th> <th class="th7_servicios">Acción</th> </tr>
+                </thead>
+                <tbody id="tabla_body" >
+            
+                </tbody>   
+            </table>             
+        </div> 
+
+    <div class="tabla_control">
+        <span>Resultados por página</span>
+        <select id="por_pagina_servicios" onchange="BusquedaParam_aux()" >
+            <option style="display: none;" value="">---</option>            
+            <option value="5" selected >5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>           
+        </select>      
+
+        <input id="actual_page_servicios" type="number" hidden value="1">
+        <input id="num_pages_servicios" type="number" hidden value="1">
+        <input id="old_search_servicios" type="text" hidden value="">
+        <a class="back_forward" onclick="page_counter_servicios_sub()" ><u>Atras</u></a>
+        <span class="total_items_cliente" id="total_items_servicios_sin_asignar">0 de 0</span>        
+        <a class="back_forward" onclick="page_counter_servicios_add()" ><u>Siguiente</u></a>
+    </div> 
+
+    
+    <!-- Pagar a técnico-->
+    <dialog id="modal" class="modal_new">
+        <!-- <form action="" method="dialog" formmethod="dialog"> -->
+        <div class="encabezado" >
+            <ion-icon name="cash-outline"></ion-icon>
+            <span id="titulo_abono">Pagar</span>
+            <ion-icon onclick="closemodal()" name="close-outline"></ion-icon>
+        </div>
+        
+
+            <!-- Fila de abono-->
+            <div style="margin: 10px;">
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Servicio</span> 
+                    </div>
+                    <div>
+                        <span id="servicio"></span> 
+                    </div>
+                </div>
+
+                <div class="info_casilla" style="width: 90%;">
+                    <div>
+                        <span>Técnico</span> 
+                    </div>
+                    <div >
+                       
+                            <span id="tecnico" ></span> 
+                                            
+                    </div>
+                </div>
+
+                <div class="info_casilla" style="width: 90%;">
+                    <div>
+                        <span>Estado</span> 
+                    </div>
+                    <div>
+                        <span id="estado_aux"></span> 
+                    </div>
+                </div>
+
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Fecha</span> 
+                    </div>
+                    <div>
+                        <span id="fecha"></span> 
+                    </div>
+                </div>
+
+                <div class="info_casilla" style="width: 20%;">
+                    <div>
+                        <span>Usuario</span> 
+                    </div>
+                    <div>
+                        <span id="usuario"></span> 
+                    </div>
+                </div>
+
+                <!-- Tabla de abonos en detalle -->
+                <div class="cont_resultados"  >
+                    <table class="tabla" summary="no_orderDate"  >
+                        <thead style="position: sticky; top: 0px;"  >
+                            <tr><th class="th1" >Actividad realizada</th><th class="th2">Fecha</th><th class="th3"> Valor </th>  <th class="th4">Acción</th> </tr>
+                        </thead>
+                        <tbody id="tabla_partes" >
+                            <!-- <tr><th  rowspan="4" style="color: red;" >Resultados</th> </tr>                         -->
+                        </tbody>   
+                    </table>             
+                </div> 
+
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Valor a pagar</span> 
+                    </div>
+                    <div>
+                        <!-- <input type="number" name="" id=""> -->
+                        <span id="valor"></span> 
+                    </div>
+                </div>
+            </div>
+            <span id="id_estado" hidden ></span>
+            <span id="parte_id" hidden ></span>
+
+            <div class="botones">
+                <button id="boton_pago" style="background-color: red;" onclick="alerta_boton_pagar()" > Pagar </button>
+                <button onclick="closemodal()"  type="button"> Cancelar</button> 
+            </div>  
+    </dialog>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'js/pagos_script.js' %}"></script>
+</body>
+</html>

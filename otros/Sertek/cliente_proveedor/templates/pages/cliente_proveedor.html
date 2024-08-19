@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cliente/proveedor</title>
+    <link rel="stylesheet" href="{% static 'css/cliente_proveedor_style.css' %}">
+</head>
+<body>  
+        <!-- Crea contacto -->
+        <dialog id="modal" class="modal">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado">
+                <ion-icon name="person-add-outline"></ion-icon>
+                <span>Crear contacto</span>
+                <ion-icon onclick="closemodal()" name="close-outline"></ion-icon>
+            </div>
+            
+            <form id="form_crear_contacto" method="dialog"   >     
+                <div class="cuerpo">  
+                <select name="tipo_contacto" id="tipo_contacto" required="required">
+                    <option value="" disabled selected hidden>Tipo de contacto</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Proveedor">Proveedor</option>
+                    <option value="Ambos">Ambos</option>
+                </select>
+        
+                <select name="tipo_identidad" id="tipo_identidad" required="required">
+                    <option value="" disabled selected hidden>Tipo de identidad</option>
+                    <option value="NIT">Número de identificación tributaria</option>
+                    <option value="C.C">Cédula de ciudadanía</option>
+                    <option value="D.I.E">Documento de identificación extranjero</option>
+                    <option value="P">Pasaporte</option>
+                    <option value="C.E">Cédula de extranjería</option>
+                    <option value="T.E">Tarjeta de extranjería</option>
+                    <option value="T.I">Tarjeta de identidad</option>
+                    <option value="R.C">Registro civil</option>
+                </select>
+        
+                <input name="identidad" id="identidad" type="number" placeholder="Identidad" required="required">
+                <input name="nombre" id="nombre" type="text" placeholder="Nombre" required="required">
+                <input name="direccion" id="direccion" type="text" placeholder="Dirección" required="required">
+                <input name="telefono" id="telefono" type="text" placeholder="Telefono" required="required">
+                
+                <select name="departamento" id="departamento" required="required">
+                    {% autoescape off %}
+                             {{ lista_ciudades }}
+                    {% endautoescape %}
+                    <!-- <option value="" disabled selected hidden>Departamento</option>
+                    <option value="Antioquia">Antioquia</option>
+                    <option value="Atlantico">Atlántico</option>
+                    <option value="Bogotá">Bogotá</option>
+                    <option value="Bolivar">Bolivar</option>
+                    <option value="Boyacá">Boyacá</option>
+                    <option value="Caldas">Caldas</option>
+                    <option value="Caquetá">Caquetá</option>
+                    <option value="Cauca">Cauca</option>
+                    <option value="Cesar">Cesar</option>
+                    <option value="Cordoba">Cordoba</option>
+                    <option value="Cundinamarca">Cundinamarca</option>
+                    <option value="Chocó">Chocó</option>
+                    <option value="Huila">Huila</option>
+                    <option value="La Guajira">La Guajira</option>
+                    <option value="Magdalena">Magdalena</option>
+                    <option value="Meta">Meta</option>
+                    <option value="Nariño">Nariño</option>
+                    <option value="N. de Santander">N. de Santander</option>
+                    <option value="Quindio">Quindio</option>
+                    <option value="Risaralda">Risaralda</option>
+                    <option value="Santander">Santander</option>
+                    <option value="Sucre">Sucre</option>
+                    <option value="Tolima">Tolima</option>
+                    <option value="Valle del Cauca">Valle del Cauca</option>
+                    <option value="Arauca">Arauca</option>
+                    <option value="Casanare">Casanare</option>
+                    <option value="Putumayo">Putumayo</option>
+                    <option value="San Andres">San Andres</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="Guainía">Guainía</option>
+                    <option value="Guaviare">Guaviare</option>
+                    <option value="Vaupes">Vaupes</option>
+                    <option value="Vichada">Vichada</option> -->
+                </select>
+                <input name="localidad" id="localidad" type="text" placeholder="Localidad" required="required">
+                <input type="email" id="email" name="email" type="text" placeholder="E-mail" required="required">
+                </div>
+                <div class="botones">
+                    <button  type="submit"> Crear </button>
+                    <button onclick="closemodal()"  type="button"> Cancelar</button> 
+                    <input name="editar_flag"  type="text" value="0" hidden >
+                </div>                      
+            </form>          
+        </dialog>
+
+
+
+        <!-- Edita contacto y borra -->
+        <dialog id="modal_edit" class="modal">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado">
+                <ion-icon id="icon_titulo" name="pencil-outline"></ion-icon>
+                <span id="titulo">Editar contacto</span>
+                <ion-icon onclick="closemodal_edit()" name="close-outline"></ion-icon>
+            </div>
+            
+            <form  method="post"  >
+                {% csrf_token %}      
+                <div class="cuerpo">  
+                <select name="tipo_contacto" id="tipo_contacto_edit" required="required">
+                    <option value="" disabled selected hidden>Tipo de contacto</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Proveedor">Proveedor</option>
+                    <option value="Ambos">Ambos</option>
+                </select>
+        
+                <select name="tipo_identidad" id="tipo_identidad_edit" required="required">
+                    <option value="" disabled selected hidden>Tipo de identidad</option>
+                    <option value="NIT">Número de identificación tributaria</option>
+                    <option value="C.C">Cédula de ciudadanía</option>
+                    <option value="D.I.E">Documento de identificación extranjero</option>
+                    <option value="P">Pasaporte</option>
+                    <option value="C.E">Cédula de extranjería</option>
+                    <option value="T.E">Tarjeta de extranjería</option>
+                    <option value="T.I">Tarjeta de identidad</option>
+                    <option value="R.C">Registro civil</option>
+                </select>
+        
+                <input name="identidad" id="identidad_edit" type="number" placeholder="Identidad" required="required" readonly>
+                <input name="nombre" id="nombre_edit" type="text" placeholder="Nombre" required="required">
+                <input name="direccion" id="direccion_edit" type="text" placeholder="Dirección" required="required">
+                <input name="telefono" id="telefono_edit" type="text" placeholder="Telefono" required="required">
+                
+                <select name="departamento" id="departamento_edit" required="required">
+                    {% autoescape off %}
+                             {{ lista_ciudades }}
+                    {% endautoescape %}
+                    <!-- <option value="" disabled selected hidden>Departamento</option>
+                    <option value="Antioquia">Antioquia</option>
+                    <option value="Atlantico">Atlántico</option>
+                    <option value="Bogotá">Bogotá</option>
+                    <option value="Bolivar">Bolivar</option>
+                    <option value="Boyacá">Boyacá</option>
+                    <option value="Caldas">Caldas</option>
+                    <option value="Caquetá">Caquetá</option>
+                    <option value="Cauca">Cauca</option>
+                    <option value="Cesar">Cesar</option>
+                    <option value="Cordoba">Cordoba</option>
+                    <option value="Cundinamarca">Cundinamarca</option>
+                    <option value="Chocó">Chocó</option>
+                    <option value="Huila">Huila</option>
+                    <option value="La Guajira">La Guajira</option>
+                    <option value="Magdalena">Magdalena</option>
+                    <option value="Meta">Meta</option>
+                    <option value="Nariño">Nariño</option>
+                    <option value="N. de Santander">N. de Santander</option>
+                    <option value="Quindio">Quindio</option>
+                    <option value="Risaralda">Risaralda</option>
+                    <option value="Santander">Santander</option>
+                    <option value="Sucre">Sucre</option>
+                    <option value="Tolima">Tolima</option>
+                    <option value="Valle del Cauca">Valle del Cauca</option>
+                    <option value="Arauca">Arauca</option>
+                    <option value="Casanare">Casanare</option>
+                    <option value="Putumayo">Putumayo</option>
+                    <option value="San Andres">San Andres</option>
+                    <option value="Amazonas">Amazonas</option>
+                    <option value="Guainía">Guainía</option>
+                    <option value="Guaviare">Guaviare</option>
+                    <option value="Vaupés">Vaupés</option>
+                    <option value="Vichada">Vichada</option> -->
+                </select>
+                <input name="localidad" id="localidad_edit" type="text" placeholder="Localidad" required="required">
+                <input type="email" id="email_edit" name="email" type="text" placeholder="E-mail" required="required">
+                </div>
+
+                <div class="botones">
+                    <button id="accion" type="button"> Guardar </button>
+                    <button onclick="closemodal_edit()"  type="button"> Cancelar</button> 
+                    <input id="editar_flag" name="editar_flag"  type="text" hidden>
+                </div>                      
+            </form>          
+        </dialog>
+
+        <dialog class="modal_notificacion" id="modal_notificacion">
+            <div >
+                <span> {{message}}</span>
+                <button onclick="closemodal_2()">OK</button>
+            </div>  
+        </dialog>
+
+    <!-- Principal -->
+    <div class="cabecera">
+        <ion-icon name="id-card-outline"></ion-icon> 
+        <span >Contacto</span>
+        <span>Contacto -> Cliente / Proveedor</span> 
+        <div class="busqueda"> 
+            <button id="boton_search" type="button"  >
+                <ion-icon name="search-outline"></ion-icon>
+            </button>          
+            <input id="search_contacto" name="search" type="text" placeholder="Search.." required="required" value="" >             
+
+            <button onclick="openmodal()">
+                <span> 
+                    <ion-icon name="person-add-outline"></ion-icon> 
+                    <span>Nuevo contacto</span>
+                </span>
+            </button>
+        </div>             
+    </div>
+
+    <input id="search_contacto_keep" style="position: fixed;" type="text"   value=""  hidden>
+
+    <div class="relleno">
+    </div>  
+
+    <div class="cont_resultados">
+        <table id="tabla" class="tabla" summary="no_orderDate"  >
+            <thead >
+                <tr><th class="th1" >Tipo doc</th><th class="th2">Contacto</th><th class="th3">Identificación</th> <th class="th4">Nombre</th> <th class="th5">Telefono</th> <th class="th6">Mail</th> <th class="th7">Localidad</th> <th class="th8">Acción</th> </tr>
+            </thead>
+            <tbody id="tabla_body" >
+          
+            </tbody>   
+        </table>             
+    </div>  
+
+    <div class="tabla_control">
+        <span>Resultados por página</span>
+        <select id="por_pagina" onchange="BuscarContactos()" >
+            <option style="display: none;" value="">---</option>            
+            <option id="option_5_servicios" value="5" selected >5</option>
+            <option id="option_10_servicios" value="10">10</option>
+            <option id="option_20_servicios" value="20">20</option>
+            <option id="option_todos_servicios" value="50">50</option>           
+        </select>     
+
+        <input id="actual_page" type="number" hidden value="1">
+        <input id="num_pages" type="number" hidden value="1">
+        <input id="old_search" type="text" hidden value="">
+        <a class="back_forward" onclick="page_counter_sub()" ><u>Atras</u></a>
+        <span class="total_items" id="total_items">0 de 0</span>        
+        <a class="back_forward" onclick="page_counter_add()" ><u>Siguiente</u></a>
+    </div> 
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'js/cliente_proveedor_script.js' %}"></script>
+</body>
+</html>

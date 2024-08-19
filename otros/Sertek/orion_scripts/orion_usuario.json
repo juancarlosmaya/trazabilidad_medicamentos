@@ -1,0 +1,40 @@
+{
+  "id": "num_usuario",
+  "type": "usuario",
+  "nombre": {
+    "value": "Carlos",
+    "type": "String"
+  },
+  "cedula": {
+    "value": "Bogotá",
+    "type": "String"
+  },
+  "rol":{
+    "value": "Cll 147 #7g-84",
+    "type": "String"
+  },
+  "servicio":{
+    "value": "1085254913",
+    "type": "String"
+  },
+  "nickname":{
+    "value": "Vigente",
+    "type": "String"
+  },
+  "mail":{
+    "value": "Vigente",
+    "type": "String"
+  },
+  "accion":{
+    "value": "Vigente",
+    "type": "String"
+  },
+  "password":{
+    "value": "Vigente",
+    "type": "String"
+  },
+  "tipo":{
+    "value": "usuario",
+    "type": "String"
+  }
+}

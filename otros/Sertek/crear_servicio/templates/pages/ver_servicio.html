@@ -1,0 +1,1352 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear servicio</title>
+    <link rel="stylesheet" href="{% static 'css/ver_servicio_style.css' %}">
+</head>
+<body  >
+    <!-- Página principal -->
+    <div class="cabecera">
+        <ion-icon name="list-outline"></ion-icon>
+        <span >Detalle del servicio</span>           
+    </div>
+
+    <div style="padding: 0.5%; background-color: white;display: flex;">
+        <div class="servicio_hoja">
+            <div class="cabecera_informacion">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <span >Información del producto</span> 
+                <ion-icon id="save_orden" onclick="actualiza_servicio()" name="save-outline" ></ion-icon>
+                <ion-icon onclick="editar_servicio()" name="create-outline"></ion-icon>
+                <ion-icon onclick="imprime_orden('{{ servicio }}')" name="print-outline"></ion-icon>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex; width: 100%;">
+                <div class="info_casilla" style="width: 50%;">
+                    <div>
+                        <span>Servicio</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ servicio }}</span>  -->
+                        <input id="servicio_edit" type="text" value='{{ servicio }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>Fecha de creación</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ fecha_de_creacion }}</span>  -->
+                        <input id="fecha_edit"  type="text" value='{{ fecha_de_creacion }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>lugar</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ lugar }}</span> -->
+                        <!-- <input class="orden_servicio" type="text" value='{{ lugar }}' readonly> -->
+                        <select class="orden_servicio" name="lugar" id="lugar" required="required" disabled>
+                            <option value="" disabled selected hidden>Lugar</option>
+                            <option value="Domicilio">Domicilio</option>
+                            <option value="Centro de servicio">Centro de servicio</option>
+                        </select>
+                        <script>
+                            document.getElementById('lugar').value = '{{ lugar }}';
+                        </script>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>Tipo de servicio</span>
+                    </div>
+                    <div>
+                        <!-- <span>{{ tipo_de_servicio }}</span> -->
+                        <!-- <input class="orden_servicio" type="text" value='{{ tipo_de_servicio }}' readonly> -->
+                        <select class="orden_servicio" name="tipo_servicio" id="tipo_servicio" required="required" disabled>
+                            <option value="" disabled selected hidden>Tipo de servicio</option>
+                            <option value="Facturable">Facturable</option>
+                            <option value="Garantía">Garantía</option>
+                            <option value="Garantía extendida">Garantía extendida</option>
+                            <option value="Cortesia">Cortesia</option>
+                        </select> 
+                        <script>
+                            document.getElementById('tipo_servicio').value = '{{ tipo_de_servicio }}';
+                        </script> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Seguimiento</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ seguimiento }}</span>  -->
+                        <!-- <input class="orden_servicio" type="text" value='{{ seguimiento }}' readonly> -->
+                        <select class="orden_servicio" name="seguimiento" id="seguimiento" required="required" disabled>
+                            <option value="" disabled selected hidden>Seguimiento</option>
+                            <option value="Reparación">Reparación</option>
+                            <option value="Instalación">Instalación</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                            <option value="Venta">Venta</option>
+                        </select>
+                        <script>
+                            document.getElementById('seguimiento').value = '{{ seguimiento }}';
+                        </script> 
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla" style="width: 60%;">
+                    <div>
+                        <span>Técnico</span> 
+                    </div>
+                    <div>
+                        <span id="tecnico" ></span> <ion-icon onclick="openmodal_asignar_tecnico('{{ servicio }}')" name="accessibility-outline"></ion-icon>
+                    </div>
+                </div>            
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Fecha estado</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ fecha_de_estado }}</span>  -->
+                        <input  type="text" value='' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>Estado</span> 
+                    </div>
+                    <div>
+                        <span> </span> <ion-icon name="reload-outline" onclick="openmodal_asignar_estado('{{ servicio }}')" ></ion-icon>
+                        <!-- <select class="orden_servicio" id="estado" disabled>
+                            <option value="" disabled selected hidden>Seguimiento</option>
+                            <option value="Reparación">Reparación</option>
+                            <option value="Instalación">Instalación</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                            <option value="Venta">Venta</option>
+                        </select> -->
+                        <!-- {% autoescape off %}
+                             {{ estado }}
+                        {% endautoescape %} -->
+                        <!-- <input class="orden_servicio" type="text" value='{{ estado }}' readonly> <ion-icon name="reload-outline"></ion-icon> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Nombre/Razon social</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ nombre }}</span>  -->
+                        <input id="nombre_servicio" class="orden_servicio" type="text" value='{{ nombre }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Cédula/NIT</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ identidad }}</span> -->
+                        <input id="identidad_servicio" class="orden_servicio" type="text" value='{{ identidad }}' readonly> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Dirección</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ direccion }}</span>  -->
+                        <input id="direccion_servicio" class="orden_servicio" type="text" value='{{ direccion }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Localidad</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ localidad }}</span>  -->
+                        <input id="localidad_servicio" class="orden_servicio" type="text" value='{{ localidad }}' readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Telefono</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ telefono }}</span>  -->
+                        <input id="telefono_servicio" class="orden_servicio" type="text" value='{{ telefono }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>E-mail</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ email }}</span> -->
+                        <input id="email_servicio" class="orden_servicio" type="text" value='{{ email }}' readonly> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Marca</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ marca }}</span>  -->
+                        <input id="marca_servicio" class="orden_servicio" type="text" value='{{ marca }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>Producto</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ producto }}</span> -->
+                        <input id="producto_servicio" class="orden_servicio" type="text" value='{{ producto }}' readonly> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Modelo</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ modelo }}</span>  -->
+                        <input id="modelo_servicio" class="orden_servicio" type="text" value='{{ modelo }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>Serie</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ serie }}</span>  -->
+                        <input id="serie_servicio" class="orden_servicio" type="text" value='{{ serie }}' readonly>
+                    </div>
+                </div>
+                <div class="info_casilla">
+                    <div>
+                        <span>Doc. Referencia</span> 
+                    </div>
+                    <div style="width: 99%;">
+                        <!-- <span>{{ doc_ref }}</span>  -->
+                        <input id="doc_ref_servicio" class="orden_servicio" type="text" value='{{ doc_ref }}'   readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Falla</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ falla }}</span>  -->
+                        <input id="falla_servicio" class="orden_servicio" type="text" value='{{ falla }}' readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Accesorios</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ accesorios }}</span>  -->
+                        <input id="accesorios_servicio" class="orden_servicio" type="text" value='{{ accesorios }}' readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Observación</span> 
+                    </div>
+                    <div>
+                        <!-- <span>{{ observacion }}</span>  -->
+                        <input id="observacion_servicio" class="orden_servicio" type="text" value='{{ observacion }}' readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fila de información servicio -->
+            <!-- <div style="display: flex;">
+                <div class="info_casilla">
+                    <div>
+                        <span>Almacen</span> 
+                    </div>
+                    <div>
+                        <span>{{ almacen }}</span> 
+                    </div>
+                </div>
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>Fecha de compra</span> 
+                    </div>
+                    <div>
+                        <span>{{ fecha_de_compra }}</span> 
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Fila de información servicio -->
+            <!-- <div style="display: flex;">
+                <div class="info_casilla" style="width: 30%;">
+                    <div>
+                        <span>Número de factura</span> 
+                    </div>
+                    <div>
+                        <span>{{ numero_de_factura }}</span> 
+                    </div>
+                </div>
+                <div class="info_casilla" style="width: 40%;">
+                    <div>
+                        <span>PLU</span> 
+                    </div>
+                    <div>
+                        <span>{{ PLU }}</span> 
+                    </div>
+                </div>
+            </div>             -->
+        </div>
+        
+        <!-- Contenerdor abonos, remisión, mensajes... -->
+        <div style=" width: 40%;" >
+            <div style="display: flex; width: 100%;">
+                <div style="display: flex; width: 100%;" >
+                    <div class="abonos">
+                        <div>
+                            <span>Abonos</span>
+                            <ion-icon onclick="abonos_detalle()" name="cash-outline"></ion-icon>
+                        </div>
+                        <div>
+                            <span>Total abonos</span>
+                        </div>
+                        <div>
+                            <span id="total_abonos">$ {{total_abonos}}</span>
+                        </div>
+                        <div onclick="openmodal_modal_abono()">
+                            <ion-icon name="add-circle-outline"></ion-icon>
+                            <span>Agregar abono</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Front -->
+                <div style="display: flex; width: 100%;"  >
+                    <div class="abonos">
+                        <div>
+                            <span>Remisión</span>
+                        </div>
+                        <div>
+                            <span>Total remisión</span>
+                        </div>
+                        <div>
+                            <span id="total_remision_front" >{{ total_remision }}</span>
+                        </div>
+                        <!-- <div onclick="load_remision()"> -->
+                        <div id="boton_remision_front" onclick="{{ funcion_boton_remision }}">
+                            <ion-icon name="document-text-outline"></ion-icon>
+                            <span id="texto_boton_remision_front">{{ texto_boton_remision }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="display: flex; width: 100%;"  >
+                    <div class="notas">
+                        <div>
+                            <ion-icon name="document-attach-outline"></ion-icon>
+                            <span>Notas</span>
+                        </div>
+                        <div id="div_mensajes" style="display: block; width: 100%;">
+                            <!-- Acá van lo mensajes -->
+                            {% autoescape off %}
+                                {{ notas }}
+                            {% endautoescape %}
+
+                            <script>
+                                document.getElementById('div_mensajes').scrollTop = document.getElementById('div_mensajes').scrollHeight
+                            </script>
+                            <!-- <div style="background-color: rgb(243, 243, 255) ;margin: 5px; padding: 5px; border-radius: 10px;">
+                                <div>
+                                    <span style="font-size: small;"> Fecha </span> 
+                                </div>
+                                <div>
+                                    <span style="color: rgb(0, 13, 158); font-size: large;" > usuario </span> <span> mensaje</span>
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <div >
+                            <div>
+                                <input id="input_nota" type="text">
+                                <ion-icon id="boton_nota" name="send-outline"></ion-icon>
+                            </div>
+                            <div>
+                                <span>Agregar nota</span>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Tabla de informacion parte -->
+    <!-- <div style="margin-left:5px; margin-right: 17px;"> -->
+    <div style="margin-left:5px; margin-right: 30px; overflow-y: scroll; overflow: hidden; min-height: 300px; border: 1px solid black; margin-bottom: 20px;">
+        <div class="cabecera_informacion_parte">
+            <ion-icon name="hammer-outline"></ion-icon>
+            <span >Información parte</span> 
+            <ion-icon name="add-outline" onclick="openmodal_modal_solicitud(('{{ servicio }}'))" ></ion-icon>
+        </div>
+        <div class="cont_resultados">
+            <table id="tabla" class="tabla" summary="no_orderDate"  >
+                <thead >
+                    <tr><th class="th1_servicios" >Nombre</th><th class="th2_servicios">Referencia</th><th class="th3_servicios">Fecha Solicitud</th> <th class="th4_servicios">Cantidad</th> <th class="th5_servicios">Precio de venta</th> <th class="th6_servicios">Total</th> <th class="th7_servicios">Acción</th> </tr>
+                </thead>
+                <tbody id="tabla_body"  >
+                    <!-- <tr><th >No hay datos disponibles</th> </tr> -->
+                    {% autoescape off %}
+                        {{ informacion_parte_tabla }}
+                    {% endautoescape %}
+                   
+                </tbody>   
+            </table>             
+        </div> 
+    </div>
+
+    <!-- VVVVVVVVVVVVVVV -->
+    <!-- Estados tabla --> 
+    <!-- <div style="margin-left:5px; margin-right: 17px;"> -->
+        <div style="margin-left:5px; margin-right: 30px; overflow-y: scroll; overflow: hidden; min-height: 300px; border: 1px solid black; margin-bottom: 20px;">
+            <div class="cabecera_informacion_parte">
+                <ion-icon name="hammer-outline"></ion-icon>
+                <span >Información estados</span> 
+                <ion-icon name="add-outline" onclick="openmodal_modal_solicitud(('{{ servicio }}'))" ></ion-icon>
+            </div>
+            <div class="cont_resultados">
+                <table class="tabla" summary="no_orderDate"  >
+                    <thead >
+                        <tr><th class="th1_estado" >Fecha</th><th class="th2_estado">Técnico</th><th class="th3_estado">Estado</th> <th class="th4_estado">Usuario</th>  <th class="th5_estado">Acción</th> </tr>
+                    </thead>
+                    <tbody id="estados_tabla" >
+                        <!-- <tr><th >No hay datos disponibles</th> </tr> -->
+                        {% autoescape off %}
+                            {{ informacion_estados_tabla }}
+                        {% endautoescape %}
+                       
+                    </tbody>   
+                </table>             
+            </div> 
+        </div>
+
+        <!-- Modals -->
+
+        <!-- Abonos detalle -->
+        <dialog  id="modal_abonos_detalle" class="modal_new" style="width: 100%; height: 60%; overflow: hidden;">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado"  >
+                <ion-icon name="accessibility-outline"></ion-icon>
+                <span id="titulo">Detalle de abonos</span>
+                <ion-icon onclick="closemodal_abono_datalle()" name="close-outline"></ion-icon>
+            </div>
+            <!-- Tabla de abonos en detalle -->
+                <div class="cont_resultados"  >
+                    <table id="tabla" class="tabla" summary="no_orderDate"  >
+                        <thead style="position: sticky; top: 0px;"  >
+                            <tr><th class="th1_abonos" ># Doc</th><th class="th2_abonos">Fecha</th><th class="th3_abonos">Forma de pago</th> <th class="th4_abonos">Detalle</th> <th class="th5_abonos">Valor</th> <th class="th6_abonos">Usuario</th> <th class="th7_abonos">Acción</th> </tr>
+                        </thead>
+                        <tbody id="tabla_abonos_detalle" >
+                            <tr><th>Resultados</th> </tr>                        
+                        </tbody>   
+                    </table>             
+                </div> 
+        </dialog>
+
+        <!-- Asigna técnico -->
+        <dialog id="modal_asignar_tecnico" class="modal_new">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado">
+                <ion-icon name="accessibility-outline"></ion-icon>
+                <span id="titulo">Asignar técnico</span>
+                <ion-icon onclick="closemodal_asignar_tecnico()" name="close-outline"></ion-icon>
+            </div>
+            
+            <form id="form_asigna_tecnicos" method="dialog">    
+                <div class="cuerpo">      
+                <select id="lista_tecnicos" required="required" >
+                    <!-- <option value="" disabled selected hidden>Tipo de identidad</option> -->
+                    <!-- <option value="NIT">Número de identificación tributaria</option> -->
+                </select>
+                </div>
+
+                <div class="botones">
+                    <button type="submit" id="accion_asigna_tecnico" > Asignar </button>
+                    <button onclick="closemodal_asignar_tecnico()"  type="button"> Cancelar</button> 
+                </div>  
+            </form> 
+            <input id="numero_servicio" type="text" hidden >
+        </dialog>
+
+        <!-- Asigna estado -->
+        <dialog id="modal_asignar_estado" class="modal_new">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado">
+                <ion-icon name="accessibility-outline"></ion-icon>
+                <span id="titulo">Registrar estado</span>
+                <ion-icon onclick="closemodal_asignar_estado()" name="close-outline"></ion-icon>
+            </div>
+            
+            <form id="form_asigna_estado" method="dialog">    
+                <div class="cuerpo">      
+                <select id="lista_estados" required="required" >
+                    {% autoescape off %}
+                            {{ lista_estados_tabla }}
+                    {% endautoescape %}
+                    <!-- <option value="Sin asignar" disabled selected hidden>Sin asignar</option>
+                    <option value="Asignar estado" disabled selected hidden>Asignar estado</option>
+                    <option value="Sin asignación">Sin asignación</option>
+                    <option value="Repuesto disponible en CSA">Repuesto disponible en CSA</option>
+                    <option value="Pendiente por repuesto">Pendiente por repuesto</option>
+                    <option value="Pendiente por aprobación de cliente">Pendiente por aprobación de cliente</option>
+                    <option value="Proceso de cambio">proceso de cambio</option>
+                    <option value="Proceso de reparación">Proceso de reparación</option>
+                    <option value="Proceso de reparación en taller">Proceso de reparación en taller</option>
+                    <option value="Producto en proceso de cambio">Producto en proceso de cambio</option>
+                    <option value="Producto entregado">Producto entregado</option>
+                    <option value="Producto reparado">Producto reparado</option>
+                    <option value="Servicio cancelado">Servicio cancelado</option>
+                    <option value="Soporte técnico">Soporte técnico</option> -->
+                </select>
+                </div>
+
+                <div class="botones">
+                    <button type="submit" id="accion_asigna_estado" > Registrar </button>
+                    <button onclick="closemodal_asignar_estado()"  type="button"> Cancelar</button> 
+                </div>  
+            </form> 
+            <input id="numero_servicio" type="text" hidden >
+        </dialog>
+
+        <!-- Abonos -->
+        <dialog id="modal_abono" class="modal_new">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado">
+                <ion-icon name="cash-outline"></ion-icon>
+                <span id="titulo_abono">Agregar abono</span>
+                <ion-icon onclick="closemodal_modal_abono()" name="close-outline"></ion-icon>
+            </div>
+            
+            <form id="form_abono" method="dialog">    
+                <!-- Fila de abono-->
+                <div style="margin: 10px;">
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Servicio</span> 
+                        </div>
+                        <div>
+                            <span id="servicio" >{{servicio}}</span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 70%;">
+                        <div>
+                            <span>Medio de pago</span> 
+                        </div>
+                        <div style="border: none ;">
+                            <select id="medio_de_pago" required="required" style="width: 100%; height: 100%; outline: none; position: absolute; bottom: 0px; border: none; border-bottom: 1px solid black;">
+                                <option value="" disabled selected hidden>Medio de pago</option>
+                                <option value="efectivo">Efectivo</option>
+                                <option value="Tranferencia debito">Tranferencia debito</option>
+                                <option value="Consignación bancaria">Consignación bancaria</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Nombre / Razon social</span> 
+                        </div>
+                        <div>
+                            <span id="nombre_razon_social">{{nombre}}</span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Detalle</span> 
+                        </div>
+                        <div>
+                            <input id="detalle" style="outline: none; border: none; position: absolute; bottom: 0px; height: 100%; width: 100%;" type="text" required="required">
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Valor abono</span> 
+                        </div>
+                        <div>
+                            <input id="valor_abono" style="outline: none; border: none; position: absolute; bottom: 0px; height: 100%;" type="number" required="required">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="botones">
+                    <button type="submit" id="accion_abono" > Guardar </button>
+                    <button onclick="closemodal_modal_abono()"  type="button"> Cancelar</button> 
+                </div>  
+            </form> 
+            <input id="numero_abono" type="text" hidden >
+        </dialog>
+        
+    <!-- Crea remisión -->
+    <dialog id="modal_remision" class="modal"  style="overflow: scroll;">
+        <form id="forma_remision" action="">
+            <div >
+                <div class="cabecera_informacion" style="height: 50px; background-color: rgba(0, 0, 0, 0.694); position: sticky; top: 0px; z-index: 10;">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <span >Remisión</span> 
+                    <ion-icon name="create-outline"></ion-icon>
+                    <!-- <ion-icon name="print-outline"></ion-icon> -->
+                </div>
+
+
+    
+                <!-- Fila de información remision -->
+                <div style="display: flex; width: 100%;">
+                    <div class="info_casilla" style="width: 20% ; border: none;">
+                        <div>
+                            <span>Forma de pago</span> 
+                        </div>
+                        <div class="select" >
+                            <select name="tipo_servicio_remision" id="tipo_servicio_remision" required onchange="forma_pago()" >
+                                <option value="" disabled selected hidden>Seleccione</option>
+                                <option value="contado">Pago contado</option>
+                                <option value="credito">Pago crédito</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="medio_pago" class="info_casilla" style="display: none; width: 30%; margin-left: 20px; ">
+                        <div>
+                            <span>Medio de pago</span> 
+                        </div>
+                        <div class="select">
+                            <select name="medio_pago_remision" id="medio_pago_remision" required  >
+                                <option value="" disabled selected hidden>Seleccione forma de pago </option>
+                                <option value="efectivo">Efectivo</option>
+                                <option value="transferencia_debito">Transferencia débito</option>
+                                <option value="consignacion_bancaria">Consignación bancaria</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="vencimiento" class="info_casilla" style="display: none; width: 20%; margin-left: 20px; ">
+                        <div>
+                            <span>Fecha vencimiento</span> 
+                        </div>
+                        <div >
+                            <input name="fecha_vencimiento_remision" id="fecha_vencimiento_remision" type="date" required>
+                        </div>
+                    </div>
+                </div>
+
+    
+                <!-- Fila de información servicio -->
+                <div style="display: flex;">
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Número de servicio</span> 
+                        </div>
+                        <div>
+                            <span id="servicio_remision">{{ servicio }}</span> 
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Producto</span> 
+                        </div>
+                        <div>
+                            <span id="producto_remision" >{{ producto }}</span>
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Marca</span> 
+                        </div>
+                        <div>
+                            <span id="marca_remision" >{{ marca }}</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Fila de información servicio -->
+                <div style="display: flex;">
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Identificación</span> 
+                        </div>
+                        <div>
+                            <span id="identidad_remision" >{{ identidad }}</span> 
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Cliente</span> 
+                        </div>
+                        <div>
+                            <span id="cliente_remision"  >{{ nombre }}</span> 
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Dirección</span> 
+                        </div>
+                        <div>
+                            <span id="direccion_remision" >{{ direccion }}</span> 
+                        </div>
+                    </div>
+                </div>
+    
+                <div id="partes_remision" >
+                    <!-- <div style="display: flex;">
+                        <div class="info_casilla" style="width: 20%;">
+                            <div>
+                                <span>Referencia</span> 
+                            </div>
+                            <div>
+                                <span></span> 
+                            </div>
+                        </div>
+                        <div class="info_casilla" style="width: 20%;">
+                            <div>
+                                <span>Nombre</span> 
+                            </div>
+                            <div>
+                                <span></span> 
+                            </div>
+                        </div>
+                        <div class="info_casilla" style="width: 10%;">
+                            <div>
+                                <span>Valor/unidad</span> 
+                            </div>
+                            <div>
+                                <span></span> 
+                            </div>
+                        </div>
+                        <div class="info_casilla" style="width: 10%;">
+                            <div>
+                                <span>Cantidad</span> 
+                            </div>
+                            <div>
+                                <span></span> 
+                            </div>
+                        </div>
+                        <div class="info_casilla" style="width: 10%;">
+                            <div>
+                                <span>Descuento</span> 
+                            </div>
+                            <div >
+                                <input type="number" style="background-color: rgb(214, 214, 214); cursor: auto;" placeholder="%%%%%%%%%%%%" oninput="update_descuento()">
+                            </div>
+                        </div>
+                        <div class="info_casilla" style="width: 10%;">
+                            <div>
+                                <span>Valor total</span> 
+                            </div>
+                            <div>
+                                <span></span> 
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                
+    
+                <!-- Fila de información remisión -->
+                <div style="display: flex; border: 1px solid black;">
+                    <div class="info_casilla" style="width: 30%;">
+                        <div>
+                            <span>Total abonos</span> 
+                        </div>
+                        <div>
+                            <span id="total_abonos_remision" >$ {{total_abonos}}</span> 
+                            <!-- <input type="text" value=""> -->
+                        </div>
+                    </div>
+                    
+                    <div style="width: 100%;">
+                        
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; width: 100%; align-content:center;  ">
+                            
+                            <div class="info_casilla" style="width: 30%;">
+                                <div>
+                                    <span>Subtotal</span> 
+                                </div>
+                                <div>
+                                    <span id="subtotal_remision"></span> 
+                                </div>
+                            </div>
+                            <div class="info_casilla" style="width: 30%;">
+                                <div>
+                                    <span>Descuento</span> 
+                                </div>
+                                <div>
+                                    <span id="descuento_remision" ></span> 
+                                </div>
+                            </div>
+                            <div class="info_casilla" style="width: 30%;">
+                                <div>
+                                    <span>Total</span> 
+                                </div>
+                                <div>
+                                    <span id="total_remision"></span> 
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            <div class="botones">
+                <button type="submit" id="accion_remision" > Guardar </button>
+                <button onclick="closemodal_modal_remision()"  type="button"> Cancelar</button> 
+            </div>
+        </form>  
+    </dialog>
+
+    <!-- Ver remisión -->
+    <dialog id="modal_ver_remision" class="modal" >
+            <div >
+                <div class="cabecera_informacion" style="height: 50px; background-color: rgba(0, 0, 0, 0.694); position: sticky; top: 0px; z-index: 10;">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <span >Remisión</span> 
+                    <!-- <ion-icon name="create-outline"></ion-icon> -->
+                    <ion-icon onclick="imprime_remision('{{ servicio_ver_remision }}')" name="print-outline" style="display: block; right: 20px;"></ion-icon>
+                </div>
+    
+                <!-- Fila de información remision -->
+                <div style="display: flex; width: 100%;">
+                    <div class="info_casilla" style="width: 20% ; border: none;">
+                        <div>
+                            <span>Forma de pago</span> 
+                        </div>
+                        <!-- <div class="select" > -->
+                        <div >
+                            <!-- <select name="tipo_servicio_ver_remision" id="tipo_servicio_remision" required onchange="forma_pago()" >
+                                <option value="" disabled selected hidden>Seleccione</option>
+                                <option value="contado">Pago contado</option>
+                                <option value="credito">Pago crédito</option>
+                            </select> -->
+                            <span id="tipo_servicio_ver_remision">{{ forma_pago_ver_remision }}</span>
+                        </div>
+                    </div>
+
+                    <div  id="medio_pago_ver_remision" class="info_casilla" style=" width: 30%; margin-left: 20px; ">
+                        <div>
+                            <span>Medio de pago</span> 
+                        </div>
+                        <div>
+                            <!-- <select name="medio_pago_ver_remision" id="medio_pago_ver_remision" required  >
+                                <option value="" disabled selected hidden>Seleccione forma de pago </option>
+                                <option value="efectivo">Efectivo</option>
+                                <option value="transferencia_debito">Transferencia débito</option>
+                                <option value="consignacion_bancaria">Consignación bancaria</option>
+                            </select> -->
+                            <span id="medio_pago_ver_remision_span" >{{ medio_pago_ver_remision }}</span>
+                        </div>
+                    </div>
+
+                    <div id="vencimiento_ver_remision" class="info_casilla" style=" width: 20%; margin-left: 20px; ">
+                        <div>
+                            <span>Fecha vencimiento</span> 
+                        </div>
+                        <div >
+                            <!-- <input name="fecha_vencimiento_ver_remision" id="fecha_vencimiento_ver_remision" type="date" required> -->
+                            <span id="vencimiento_ver_remision_span" >{{ fecha_vencimiento_ver_remision }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    if (document.getElementById('tipo_servicio_ver_remision').textContent == 'contado'){
+                        document.getElementById('medio_pago_ver_remision').style.display = 'block';
+                        document.getElementById('vencimiento_ver_remision').style.display = 'none';
+                    } 
+                    else{
+                        document.getElementById('medio_pago_ver_remision').style.display = 'none';
+                        document.getElementById('vencimiento_ver_remision').style.display = 'block';
+                    }
+                </script>
+
+    
+                <!-- Fila de información servicio -->
+                <div style="display: flex;">
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Número de servicio</span> 
+                        </div>
+                        <div>
+                            <span id="servicio_ver_remision">{{ servicio_ver_remision }}</span> 
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Producto</span> 
+                        </div>
+                        <div>
+                            <span id="producto__ver_remision" >{{ producto_ver_remision }}</span>
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Marca</span> 
+                        </div>
+                        <div>
+                            <span id="marca_ver_remision" >{{ marca_ver_remision }}</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Fila de información servicio -->
+                <div style="display: flex;">
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Identificación</span> 
+                        </div>
+                        <div>
+                            <span id="identidad_ver_remision" >{{ identidad_ver_remision }}</span> 
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Cliente</span> 
+                        </div>
+                        <div>
+                            <span id="cliente_ver_remision"  >{{ nombre_ver_remision }}</span> 
+                        </div>
+                    </div>
+                    <div class="info_casilla">
+                        <div>
+                            <span>Dirección</span> 
+                        </div>
+                        <div>
+                            <span id="direccion_ver_remision" >{{ direccion_ver_remision }}</span> 
+                        </div>
+                    </div>
+                </div>
+    
+                <div id="partes_ver_remision" >
+                    {% autoescape off %}
+                        {{ informacion_parte_ver_remision }}
+                    {% endautoescape %}                                
+                </div>
+                
+                <!-- <script>
+                    document.getElementById('partes_ver_remision').innerHTML={{informacion_parte_ver_remision}}
+                </script> -->
+                
+    
+                <!-- Fila de información remisión -->
+                <div style="display: flex; border: 1px solid black;">
+                    <div class="info_casilla" style="width: 30%;">
+                        <div>
+                            <span>Total abonos</span> 
+                        </div>
+                        <div>
+                            <span id="total_abonos_ver_remision" >{{total_abonos_ver_remision}}</span> 
+                            <!-- <input type="text" value=""> -->
+                        </div>
+                    </div>
+                    
+                    <div style="width: 100%;">
+                        
+                    </div>
+
+                    <div style=" display: flex; flex-direction: column; width: 100%; align-content:center;  ">
+                            
+                            <div class="info_casilla" style="width: 30%;">
+                                <div>
+                                    <span>Subtotal</span> 
+                                </div>
+                                <div>
+                                    <span id="subtotal_ver_remision">{{subtotal_ver_remision}}</span> 
+                                </div>
+                            </div>
+                            <div class="info_casilla" style="width: 30%;">
+                                <div>
+                                    <span>Descuento</span> 
+                                </div>
+                                <div>
+                                    <span id="descuento_ver_remision" >{{descuento_ver_remision}}</span> 
+                                </div>
+                            </div>
+                            <div class="info_casilla" style="width: 30%;">
+                                <div>
+                                    <span>Total</span> 
+                                </div>
+                                <div>
+                                    <span id="total_ver_remision">{{total_ver_remision}}</span> 
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            <div class="botones">
+                <button type="button" id="accion_ver_remision" onclick="elimina_remision()" > Eliminar </button>
+                <button onclick="closemodal_modal_ver_remision()"  type="button"> Cancelar</button> 
+            </div>
+    </dialog>
+
+
+    <!-- Solicitud de parte -->
+    <dialog id="modal_solicitud" class="modal_new" style="height: 100%; width: 100%; overflow: hidden;">
+        
+        <div class="cabecera_informacion_parte">
+            <ion-icon name="hammer-outline"></ion-icon>
+            <span >Información parte</span> 
+            <ion-icon name="close-outline" onclick="closemodal_modal_solicitud()" ></ion-icon>
+        </div>
+
+        <!-- Busqueda de parte -->
+        <div style="display: flex;">
+            <div class="info_casilla" style="width: 30%;">
+                <div>
+                    <span>Referencia o número de parte</span> 
+                </div>
+                <div style="display: flex; justify-content: baseline; ">
+                    <input id="buscar_parte" type="text" style="width: 85%; outline: none; border: none;" > <ion-icon name="search-outline" onclick="busqueda_parte()"></ion-icon>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <tr ><th class="th1_sol_parte" >Nombre</th><th class="th2_sol_parte">Referencia</th><th class="th3_sol_parte">Precio de venta</th> <th class="th4_sol_parte">Acción</th> </tr> -->
+        <!-- <tr><th colspan="4" >No hay datos disponibles para mostrar</th> </tr>  -->
+
+        <!-- Tabla de parte-->
+        <div class="cont_resultados" style="height: 50%; width: calc(100% + 15px); margin: 10px;"  >
+            <table id="tabla" class="tabla" summary="no_orderDate"  >
+                <thead style="position: sticky; top: 0px;"  >
+                    <tr ><th class="th1_sol_parte" >Nombre</th><th class="th2_sol_parte">Referencia</th><th class="th3_sol_parte">Cantidad</th> <th class="th4_sol_parte">Precio de venta</th> <th class="th5_sol_parte">Acción</th> </tr>
+                </thead>
+                <tbody id="tabla_parte" >
+                    <tr><th colspan="5" >No hay datos disponibles para mostrar</th> </tr>                       
+                </tbody>   
+            </table>             
+        </div>
+
+         <!-- Información de parte seleccionada -->
+         <form action="" id="form_solicitud_parte">
+         <div style="display: flex; border-top: 2px solid black; padding: 20px;">
+            <div class="info_casilla" style="width: 60%;">
+                <div>
+                    <span>Nombre</span> 
+                </div>
+                <div>
+                    <span id="nombre_parte" style="font-size: large;"></span> 
+                </div>
+            </div>
+            <div class="info_casilla" style="width: 20%;">
+                <div>
+                    <span>Referencia</span> 
+                </div>
+                <div>
+                    <span id="referencia" style="font-size: large;"></span>
+                </div>
+            </div>
+            <div class="info_casilla" style="width: 20%;">
+                <div>
+                    <span>Cantidad</span> 
+                </div>
+                <div style="display: flex; justify-content: baseline; ">
+                    <input id="cantidad" type="number" style="outline: none; border: none;" placeholder="Introduzca la cantidad" required>
+                </div>
+            </div>
+            <input id="precio_parte" type="text" hidden>
+            <input id="num_servicio" type="text" hidden>
+            <input id="id_parte" type="text" hidden>
+        </div>
+        
+
+        <div class="botones" style="position: absolute; bottom: 10px;">
+            <button type="submit"> Solicitar  </button>
+            <button onclick="closemodal_modal_solicitud()"  type="button"> Cancelar</button> 
+        </div>
+        </form>  
+    </dialog>
+
+        <!-- Elimina solocitud de parte-->
+        <dialog id="modal_elimina_solicitud_parte" class="modal_new">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado" >
+                <ion-icon name="trash-outline"></ion-icon>
+                <span id="titulo_abono">Elimina solicitud de parte</span>
+                <ion-icon onclick="closemodal_modal_elimina_solicitud_parte()" name="close-outline"></ion-icon>
+            </div>
+            
+ 
+                <!-- Fila de abono-->
+                <div style="margin: 10px;">
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Servicio</span> 
+                        </div>
+                        <div>
+                            <span id="servicio_elimina_solicitud"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Nombre</span> 
+                        </div>
+                        <div >
+                            <div >
+                                <span id="nombre_elimina_solicitud"  style="font-size: larger; " ></span> 
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Referencia</span> 
+                        </div>
+                        <div>
+                            <span id="referencia_elimina_solicitud"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Fecha de solicitud</span> 
+                        </div>
+                        <div>
+                            <span id="fecha_elimina_solicitud"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Cantidad</span> 
+                        </div>
+                        <div>
+                            <span id="cantidad_elimina_solicitud"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Precio de venta</span> 
+                        </div>
+                        <div>
+                            <span id="precio_elimina_solicitud"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Total</span> 
+                        </div>
+                        <div>
+                            <span id="total_elimina_solicitud"></span> 
+                        </div>
+                    </div>
+
+                </div>
+                <span id="solicitud_parte_elimina_solicitud" hidden></span> 
+                <div class="botones">
+                    <button onclick="elimina_solicitud_accion()" > Eliminar </button>
+                    <button onclick="closemodal_modal_elimina_solicitud_parte()"  type="button"> Cancelar</button> 
+                </div>  
+        </dialog>
+
+        <!-- Elimina abono de parte-->
+        <dialog id="modal_elimina_abono" class="modal_new">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado" >
+                <ion-icon name="trash-outline"></ion-icon>
+                <span id="titulo_abono">Eliminar abono</span>
+                <ion-icon onclick="closemodal_modal_elimina_abono()" name="close-outline"></ion-icon>
+            </div>
+            
+ 
+                <!-- Fila de abono-->
+                <div style="margin: 10px;">
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Servicio</span> 
+                        </div>
+                        <div>
+                            <span id="servicio_elimina_abono"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Num. Documento</span> 
+                        </div>
+                        <div>
+                            <span id="identidad_elimina_abono">{{ identidad }}</span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Fecha</span> 
+                        </div>
+                        <div >
+                            <div >
+                                <span id="fecha_elimina_abono"  style="font-size: larger; " ></span> 
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Forma de pago</span> 
+                        </div>
+                        <div>
+                            <span id="forma_pago_elimina_abono"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 90%;">
+                        <div>
+                            <span>Detalle</span> 
+                        </div>
+                        <div>
+                            <span id="detalle_elimina_abono"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Valor</span> 
+                        </div>
+                        <div>
+                            <span id="valor_elimina_abono"></span> 
+                        </div>
+                    </div>
+
+
+                </div>
+                <span id="identidad_elimina_abono" hidden></span> 
+                <div class="botones">
+                    <button onclick="elimina_abono_accion()" > Eliminar </button>
+                    <button onclick="closemodal_modal_elimina_abono()"  type="button"> Cancelar</button> 
+                </div>  
+        </dialog>
+
+
+        <!-- Elimina estado-->
+        <dialog id="modal_elimina_estado" class="modal_new">
+            <!-- <form action="" method="dialog" formmethod="dialog"> -->
+            <div class="encabezado" >
+                <ion-icon name="trash-outline"></ion-icon>
+                <span id="titulo_abono">Eliminar estado</span>
+                <ion-icon onclick="closemodal_modal_elimina_estado()" name="close-outline"></ion-icon>
+            </div>
+            
+    
+                <!-- Fila de estado-->
+                <div style="margin: 10px;">
+
+                    <div class="info_casilla" style="width: 100%;">
+                        <div>
+                            <span>Estado</span> 
+                        </div>
+                        <div>
+                            <span id="estado_elimina_estado"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 100%;">
+                        <div>
+                            <span>Técnico</span> 
+                        </div>
+                        <div>
+                            <span id="tecnico_elimina_estado"></span> 
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Fecha</span> 
+                        </div>
+                        <div >
+                            
+                                <span id="fecha_elimina_estado"    ></span> 
+                                                     
+                        </div>
+                    </div>
+
+                    <div class="info_casilla" style="width: 40%;">
+                        <div>
+                            <span>Usuario</span> 
+                        </div>
+                        <div>
+                            <span id="usuario_elimina_estado"></span> 
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <span id="entidad_elimina_estado" hidden></span> 
+                <div class="botones">
+                    <button onclick="elimina_estado_accion()" > Eliminar </button>
+                    <button onclick="closemodal_modal_elimina_estado()"  type="button"> Cancelar</button> 
+                </div>  
+        </dialog>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'js/ver_servicio_script.js' %}"></script>
+
+</body>
+</html>

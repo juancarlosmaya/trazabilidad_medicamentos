@@ -42,3 +42,9 @@ class formularioMedicamento(forms.ModelForm):
             
 
 
+class formularioDispensar(forms.Form):
+    
+    
+    cantidadDispensar = forms.CharField(label="Cantidad a dispensar", max_length=100, widget= forms.NumberInput(attrs={'class':'form-control'}))
+
+
