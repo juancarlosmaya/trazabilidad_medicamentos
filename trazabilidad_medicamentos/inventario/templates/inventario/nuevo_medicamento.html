@@ -8,6 +8,26 @@
                     {% csrf_token %}
                     {{ mi_formulario.as_p }}
                     <button type="submit" value="Submit" class="btn btn-success"> Guardar </button>
+                    <a href="{%url 'inventario' %}" class="btn btn-primary"> Cancelar </a>
+                    <script>
+                        const inputField1 = document.getElementById('id_denominacion');
+                        inputField1.addEventListener('input', (event) => {
+                            event.target.value = event.target.value.toUpperCase();
+                        });
+                        const inputField2 = document.getElementById('id_reg_sanitario');
+                        inputField2.addEventListener('input', (event) => {
+                            event.target.value = event.target.value.toUpperCase();
+                        });
+                        const inputField3 = document.getElementById('id_Laboratorio_fabricante');
+                        inputField3.addEventListener('input', (event) => {
+                            event.target.value = event.target.value.toUpperCase();
+                        });
+                        const inputField4 = document.getElementById('id_lote');
+                        inputField4.addEventListener('input', (event) => {
+                            event.target.value = event.target.value.toUpperCase();
+                        });
+                    </script>
+
                 </form>
             </div>
         {% endblock content %}

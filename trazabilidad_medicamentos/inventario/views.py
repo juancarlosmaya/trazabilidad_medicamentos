@@ -4,13 +4,29 @@ from django.urls import reverse
 from .models import medicamento
 from .forms import formularioMedicamento, formularioDispensar
 from django.contrib import messages
-
+import datetime
+import json
 
 # Create your views here.
 
 def inventario(request):
     medicamentos = medicamento.objects.all()
-    return render(request,'inventario/inventario.html',{'medicamentos':medicamentos})
+    vencimientos= []
+    i=0
+    for medicamentoExaminar in medicamentos:
+        today = datetime.date.today()
+        difference =  medicamentoExaminar.fecha_vencimiento - today
+        months_difference = difference.days //30   # meses de diferencia
+        if months_difference > 8:
+            vencimientos.append(0)
+        else:
+            vencimientos.append(1)
+        i = i +1
+    print(vencimientos)
+    #diccionarioMediccamentos ={item['id']: item for item in medicamentos.values()}
+    #print(diccionarioMediccamentos)
+    medicamentos_con_vencimiento = zip(medicamentos, vencimientos)
+    return render(request,'inventario/inventario.html',{'medicamentos':medicamentos_con_vencimiento})
 
 
 def nuevo_medicamento(request):

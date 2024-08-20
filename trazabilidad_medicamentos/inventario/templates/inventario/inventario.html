@@ -36,11 +36,13 @@
             <i class="fas fa-table"></i>
             Historial</div>
             -->
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                         <thead>
                             <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Gestionar</th>
                                 <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Cantidad</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Denominacion DCI</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Forma farmacéutica</th>
@@ -60,21 +62,31 @@
                         </tfoot>
                         -->
                         <tbody>
+
+                           
+
                             
-                            {% for medicamento in medicamentos %}
+                            {% for medicamento,vencimiento in medicamentos %}
                             <tr>
-                                <td scope="col"> {{medicamento.cantidad}} <a href = "{% url 'dispensar' medicamento.id %}">Dispensar</a> </td>
+                                <td scope="col"> <a href = "{% url 'dispensar' medicamento.id %}">Dispensar</a> </td>
+                                <td scope="col"> {{medicamento.cantidad}} </td>
                                 <td scope="col"> {{medicamento.denominacion}} </td>
                                 <td scope="col"> {{medicamento.forma_farmaceutica}} </td>
                                 <td scope="col"> {{medicamento.dosis}} </td>
                                 <td scope="col"> {{medicamento.reg_sanitario}} </td>
-                                <td scope="col"> {{medicamento.lote}} </td>
-                                <td scope="col"> {{medicamento.fecha_vencimiento}} </td>
+                                <td scope="col"> {{medicamento.lote}} </td>  
+                                {% if vencimiento %}
+                                <td scope="col" style="color: red;"> {{medicamento.fecha_vencimiento}}  {{vencimiento}} </td>
+                                {% else %}
+                                <td scope="col"> {{medicamento.fecha_vencimiento}}</td>
+                                {% endif %}
+
                                 <td scope="col"> {{medicamento.via_administración}} </td>
                                 <td scope="col"> {{medicamento.unidades_empaque}} </td>
                                 <td scope="col"> {{medicamento.Laboratorio_fabricante}} </td>
                             </tr>
                             {% endfor %}
+
 
 
 
