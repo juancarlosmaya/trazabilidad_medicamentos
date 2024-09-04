@@ -4,6 +4,7 @@ from django.urls import reverse
 from .models import medicamento
 from .forms import formularioMedicamento, formularioDispensar
 from django.contrib import messages
+from django.contrib.auth.models import User
 import datetime
 import json
 
@@ -26,7 +27,7 @@ def inventario(request):
     #diccionarioMediccamentos ={item['id']: item for item in medicamentos.values()}
     #print(diccionarioMediccamentos)
     medicamentos_con_vencimiento = zip(medicamentos, vencimientos)
-    return render(request,'inventario/inventario.html',{'medicamentos':medicamentos_con_vencimiento})
+    return render(request,'inventario/inventario.html',{'medicamentos':medicamentos_con_vencimiento,'usuario':User.objects.get(pk=request.user.id)})
 
 
 def nuevo_medicamento(request):
