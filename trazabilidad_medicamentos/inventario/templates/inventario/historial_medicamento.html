@@ -1,0 +1,98 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+    
+
+    <div class="breadcrumb-item active">
+        <h3>Historial Medicamento</h3>
+        <p>Cantidad Actual: {{medicamento.cantidad}}<br>
+        Denominacion DCI: {{medicamento.denominacion}}<br>
+        Forma farmacéutica: {{medicamento.forma_farmaceutica}}<br>
+        Dosis: {{medicamento.dosis}}<br>
+        Reg. Sanitario: {{medicamento.reg_sanitario}}<br>
+        Lote: {{medicamento.lote}}<br>
+        Fecha de vencimiento: {{medicamento.fecha_vencimiento}}<br>
+        Vía de administración: {{medicamento.via_administración}}<br>
+        Cant. unidades por empaque: {{medicamento.unidades_empaque}}<br>
+        Laboratorio fabricante: {{medicamento.Laboratorio_fabricante}}</p>
+    </div>
+
+<!--Historial de usuario seleccionado-->
+    <small >
+        <div class="card mb-3">
+            <!--
+            <div class="card-header">
+            <i class="fas fa-table"></i>
+            Historial</div>
+            -->
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Fecha de Evento</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Cantidad en la fecha</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Tipo de evento</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Usuario</th>
+                            </tr>
+                        </thead>
+                        <!--
+                        <tfoot>
+                                class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;"
+                            <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Start date</th><th rowspan="1" colspan="1">Salary</th></tr>
+                        </tfoot>
+                        -->
+                        <tbody>
+
+                           
+
+                            
+                            {% for evento,tipo_evento,usuario_evento in historial %}
+                            <tr>
+                                <td scope="col"> {{evento.history_date}} </td>
+                                <td scope="col"> {{evento.cantidad}} </td>
+                                <td scope="col"> {{tipo_evento}} </td>
+                                <td scope="col"> {{usuario_evento}} </td>
+                            </tr>
+                            {% endfor %}
+
+
+
+
+                            
+
+
+                            <!--
+                            {% for numero_suceso,suceso in historial_organizado.items %}
+                            <tr>
+                                <td scope="col"> {{numero_suceso}} </td>
+                                <td scope="col"> {{suceso.fecha_hora}} </td>
+                                <td scope="col"> {{suceso.suceso}} </td>
+                            </tr>
+                            {% endfor %}  
+                            -->          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </small>
+
+    <div style="text-align: center;">
+    <a href="{%url 'inventario' %}" class="btn btn-success"> Volver </a>
+    </div>
+    <br>
+    <!--
+    <p>Cedula:                      {{usuario_seleccionado.cedula}}</p>
+    <p>Fecha de nacimiento:         {{usuario_seleccionado.fecha_nacimiento}}</p>
+    </small>
+    -->
+
+                    
+{% endblock %}

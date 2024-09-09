@@ -1,8 +1,12 @@
 from django.db import models
 import csv
+from simple_history.models import HistoricalRecords
 
 # Create your models here.
+from simple_history import register
+from django.contrib.auth.models import User
 
+register(User)
 
 
 def via_administracion_choices():
@@ -36,7 +40,7 @@ class medicamento(models.Model):
     fecha_vencimiento         = models.DateField(default='2025-04-09')
     unidades_empaque          = models.DecimalField(decimal_places=0,max_digits=3,default=1,null=True,blank=True)
     Laboratorio_fabricante    = models.CharField(max_length=50)
-    historial                 = models.JSONField(default=dict,null=True,blank=True)
+    historial                 = HistoricalRecords()
     
     ##models.DurationField(null=True, blank=True)
     def __str__(self):

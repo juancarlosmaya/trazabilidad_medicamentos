@@ -1,0 +1,54 @@
+
+
+formato de fecha: /
+Mes y año
+código cum
+
+
+*Historial de movimiento 'kardex'
+
+*¿cuanto se venció?
+
+*validar campos q sean coherentes
+
+
+
+*recepción técnica:
+precios 
+cantidades
+# de factura
+
+*costo de entrada cada item en nuevo medicamento
+
+*porcentaje adicional de salida o venta
+
+
+*reporte de consumo 
+
+*opcion de quitar cero
+
+
+
+
+
+
+Roles
+* encargado de manejo de inventario (qf y regente)
+--- recepción técnica (fecha y hora, nombre!)
+--- salidas (de vencidos,fecha hora, nombre)
+
+*Dispensador
+en ventanilla de entrega de medicamentos
+(revisar ordenes de medicamento, y facturar de acuerdo a precio de medicamento y restar al inventario)
+
+*Medico
+formular
+
+gases¿? 
+
+--- administrativa , facturación, 
+
+actualizar la página permanentemente, en el tecleo
+
+posision absolute
+
