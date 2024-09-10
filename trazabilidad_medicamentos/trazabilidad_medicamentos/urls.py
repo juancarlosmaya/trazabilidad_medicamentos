@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import inicio, inventario,login
+from .views import inicio, inventario,login,historial
 
 # para importar urls de otras aplicaciones
 from django.conf.urls import url,include
@@ -26,11 +26,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', inicio),
-   ## path('inventario/', inventario),
-   ## path(r'login/', login),
+    ## path('inventario/', inventario),
+    ## path(r'login/', login),
     path(r'inventario/', include('inventario.urls')),
-   ## path('admin/', include('django_sb_admin.urls')),
-   path('admin/', admin.site.urls),
+    ## path('admin/', include('django_sb_admin.urls')),
+    path('admin/', admin.site.urls),
+    path('historial/', historial,name='historial'),
     # autenticación autentificación
     #url(r'^accounts/', include('registration.backends.default.urls'),name='inicio_sesion')
     url(r'^accounts/', include('django_registration.backends.one_step.urls')),

@@ -5,7 +5,7 @@ Mes y año
 código cum
 
 
-*Historial de movimiento 'kardex'
+*Historial de movimiento 'kardex' OK
 
 *¿cuanto se venció?
 

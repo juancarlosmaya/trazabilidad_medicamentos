@@ -1,0 +1,119 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+    
+
+    <div class="breadcrumb-item active">
+        <h3>Historial usuario: {{usuario}}</h3>
+    </div>
+
+<!--Historial de usuario seleccionado-->
+    <small >
+        <div class="card mb-3">
+            <!--
+            <div class="card-header">
+            <i class="fas fa-table"></i>
+            Historial</div>
+            -->
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered dataTable" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Fecha evento</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Gestionar</th>
+                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 157px;">Cantidad</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Denominacion DCI</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Forma farmacéutica</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Dosis</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Reg. Sanitario</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Lote</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Fecha de vencimiento</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Vía de administración</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Cant. unidades por empaque</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;">Laboratorio fabricante</th>
+                            </tr>
+                        </thead>
+                        <!--
+                        <tfoot>
+                                class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 248px;"
+                            <tr><th rowspan="1" colspan="1">Name</th><th rowspan="1" colspan="1">Position</th><th rowspan="1" colspan="1">Office</th><th rowspan="1" colspan="1">Age</th><th rowspan="1" colspan="1">Start date</th><th rowspan="1" colspan="1">Salary</th></tr>
+                        </tfoot>
+                        -->
+                        <tbody>
+
+                           
+                            {% for evento in historial_usuario %}
+                            <tr>
+                                <td scope="col"> {{evento.history_date}} </td>
+                                <td scope="col"> 
+                                    <a href = "">Dispensar</a> 
+                                    <a href = "">Historial</a> 
+                                </td>
+                                <td scope="col"> {{evento.cantidad}} </td>
+                                <td scope="col"> {{evento.denominacion}} </td>
+                                <td scope="col"> {{evento.forma_farmaceutica}} </td>
+                                <td scope="col"> {{evento.dosis}} </td>
+                                <td scope="col"> {{evento.reg_sanitario}} </td>
+                                <td scope="col"> {{evento.lote}} </td>  
+                                {% if vencimiento %}
+                                <td scope="col" style="color: red;"> {{evento.fecha_vencimiento}}  {{vencimiento}} </td>
+                                {% else %}
+                                <td scope="col"> {{evento.fecha_vencimiento}}</td>
+                                {% endif %}
+
+                                <td scope="col"> {{evento.via_administración}} </td>
+                                <td scope="col"> {{evento.unidades_empaque}} </td>
+                                <td scope="col"> {{evento.Laboratorio_fabricante}} </td>
+                            </tr>
+                            {% endfor %}
+                            
+                            {% for evento,tipo_evento,usuario_evento in historial %}
+                            <tr>
+                                <td scope="col"> {{evento.history_date}} </td>
+                                <td scope="col"> {{evento.cantidad}} </td>
+                                <td scope="col"> {{tipo_evento}} </td>
+                                <td scope="col"> {{usuario_evento}} </td>
+                            </tr>
+                            {% endfor %}
+
+
+
+
+                            
+
+
+                            <!--
+                            {% for numero_suceso,suceso in historial_organizado.items %}
+                            <tr>
+                                <td scope="col"> {{numero_suceso}} </td>
+                                <td scope="col"> {{suceso.fecha_hora}} </td>
+                                <td scope="col"> {{suceso.suceso}} </td>
+                            </tr>
+                            {% endfor %}  
+                            -->          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </small>
+
+    <div style="text-align: center;">
+    <a href="{%url 'inventario' %}" class="btn btn-success"> Volver </a>
+    </div>
+    <br>
+    <!--
+    <p>Cedula:                      {{usuario_seleccionado.cedula}}</p>
+    <p>Fecha de nacimiento:         {{usuario_seleccionado.fecha_nacimiento}}</p>
+    </small>
+    -->
+
+                    
+{% endblock %}
