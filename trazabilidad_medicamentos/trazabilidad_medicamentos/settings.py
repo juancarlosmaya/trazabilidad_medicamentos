@@ -28,10 +28,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+USE_DJANGO_JQUERY = True
+
 
 # Application definition
 
 INSTALLED_APPS = [
+    'smart_selects',
     'inventario',
     'simple_history',        # historial de modelos
     'django.contrib.auth',   # para autenticación y autentificación

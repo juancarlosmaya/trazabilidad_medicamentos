@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from .models import medicamento
-from .forms import formularioMedicamento, formularioDispensar
+from .models import medicamento, Forma_farmaceutica
+from .forms import formularioMedicamento, formularioDispensar, formularioLocation
 from django.contrib import messages
 from django.contrib.auth.models import User
 import datetime
@@ -36,8 +36,12 @@ def nuevo_medicamento(request):
         ## si se envían datos de nuevo medicamento, y son validos, son gradados en modelo medicamento
         mi_formulario=formularioMedicamento(request.POST)
         if mi_formulario.is_valid():
+            print(mi_formulario.data['nueva_forma_farmaceutica'])
+            mi_formulario.nueva_forma_farmaceutica="hola"
+            #mi_formulario.data['nueva_forma_farmaceutica']
+            print(mi_formulario.data)
             mi_formulario.save()
-            print('Nuevo paciente guardado')
+            print('Nuevo medicamento guardado')
             return redirect('inventario')
         else:
             print('Datos de nuevo paciente no son validos')
@@ -95,3 +99,8 @@ def historial_medicamento(request, medicamento_id):
         else:
             medicamentoHistorial = medicamento.objects.get(pk=medicamento_id)
         return render(request,'inventario/historial_medicamento.html',{'medicamento':medicamentoHistorial,'historial':hitorial_evento_usuario,'usuario':User.objects.get(pk=request.user.id).get_full_name})
+
+def funcionLocation(request):
+    miFormulario = formularioLocation() 
+
+    return render(request,"inventario/location.html", context={'miFormulario':miFormulario})

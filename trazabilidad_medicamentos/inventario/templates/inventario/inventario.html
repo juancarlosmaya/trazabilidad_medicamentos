@@ -70,12 +70,12 @@
                             {% for medicamento,vencimiento in medicamentos %}
                             <tr>
                                 <td scope="col"> 
-                                    <a href = "{% url 'dispensar' medicamento.id %}">Dispensar</a> 
+                                    <a href = "{% url 'dispensar' medicamento.id %}">Retirar</a> 
                                     <a href = "{% url 'historial' medicamento.id %}">Historial</a> 
                                 </td>
                                 <td scope="col"> {{medicamento.cantidad}} </td>
                                 <td scope="col"> {{medicamento.denominacion}} </td>
-                                <td scope="col"> {{medicamento.forma_farmaceutica}} </td>
+                                <td scope="col"> {{medicamento.nueva_forma_farmaceutica}} </td>
                                 <td scope="col"> {{medicamento.dosis}} </td>
                                 <td scope="col"> {{medicamento.reg_sanitario}} </td>
                                 <td scope="col"> {{medicamento.lote}} </td>  
@@ -85,7 +85,7 @@
                                 <td scope="col"> {{medicamento.fecha_vencimiento}}</td>
                                 {% endif %}
 
-                                <td scope="col"> {{medicamento.via_administración}} </td>
+                                <td scope="col"> {{medicamento.nueva_via_administracion}} </td>
                                 <td scope="col"> {{medicamento.unidades_empaque}} </td>
                                 <td scope="col"> {{medicamento.Laboratorio_fabricante}} </td>
                             </tr>

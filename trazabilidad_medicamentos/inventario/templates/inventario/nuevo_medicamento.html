@@ -6,6 +6,7 @@
             <div class="form-group">
                 <form method="POST">
                     {% csrf_token %}
+                    {{ mi_formulario.media.js }}
                     {{ mi_formulario.as_p }}
                     <button type="submit" value="Submit" class="btn btn-success"> Guardar </button>
                     <a href="{%url 'inventario' %}" class="btn btn-primary"> Cancelar </a>

@@ -19,7 +19,7 @@ from django.urls import path, include
 from .views import inicio, inventario,login,historial
 
 # para importar urls de otras aplicaciones
-from django.conf.urls import url,include
+from django.conf.urls import url,include,re_path
 
 # archivos estaticos como .css...
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -36,6 +36,7 @@ urlpatterns = [
     #url(r'^accounts/', include('registration.backends.default.urls'),name='inicio_sesion')
     url(r'^accounts/', include('django_registration.backends.one_step.urls')),
     url(r'^accounts/', include('django.contrib.auth.urls'),name='inicio_sesion'),
+    re_path(r'^chaining/', include('smart_selects.urls'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()
